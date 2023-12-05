@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RecordController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PDFController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +37,8 @@ Route::delete('auth', [AuthController::class, 'destroy'])->name('auth.destroy');
 
 Route::resource('records', RecordController::class)
     ->only(['show']);
+
+Route::get('generate-pdf/{user}', [PDFController::class, 'generatePDF'])->name('generate-pdf');
 
 // Route::resource('users', UserController::class)
 //     ->only(['create', 'store']);
