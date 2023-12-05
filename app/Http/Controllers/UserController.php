@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateUser;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -81,15 +82,21 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        //dd($user->toArray());
+        return view('users.edit')->with('user', $user);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(UpdateUser $request, User $user)
     {
-        //
+        $access_room = $request->filled('access_room_911');
+        $user->access_room_911 = $access_room;
+        //dd($request->toArray(), $user->toArray());
+        $data = $request->validated();
+        $user->update($data);
+        return redirect()->route('users.index')->with('success', 'User updated successfully!');
     }
 
     /**
