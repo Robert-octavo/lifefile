@@ -66,7 +66,7 @@ class UserController extends Controller
         $user->updated_at = now();
         $user->save();
         //dd($data, $access_room, $username);
-        return redirect()->route('users.index')->with('success', 'User created successfully!');
+        return redirect()->route('users.index')->with('success', 'Employee created successfully!');
     }
 
     /**
@@ -96,7 +96,7 @@ class UserController extends Controller
         //dd($request->toArray(), $user->toArray());
         $data = $request->validated();
         $user->update($data);
-        return redirect()->route('users.index')->with('success', 'User updated successfully!');
+        return redirect()->route('users.index')->with('success', 'Employee updated successfully!');
     }
 
     /**
@@ -104,6 +104,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect()->route('users.index')->with('success', 'Employee deleted successfully!');
     }
 }
