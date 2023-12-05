@@ -1,4 +1,5 @@
 <x-layout>
+
     @auth
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-center rtl:text-center text-gray-700 border-gray-500">
@@ -19,10 +20,8 @@
                                 {{ $user->id }}</th>
                             <td class="px-6 py-4">{{ $user->name }}</td>
                             <td class="px-6 py-4">{{ $user->last_name }}</td>
-                            {{-- Display department name base in the $user_id --}}
-
                             <td class="px-6 py-4">{{ $user->department->name }}</td>
-                            <td class="px-6 py-4">Total Access</td>
+                            <td class="px-6 py-4">{{ $has = $records->where('user_id', $user->id)->count() }}</td>
                             <td class="px-6 py-4">
                                 <div class="flex justify-evenly gap-2 w-full">
                                     {{-- Update Button --}}
@@ -74,7 +73,7 @@
                                     </form>
 
                                     {{-- History --}}
-                                    <a href="#"
+                                    <a href="{{ route('users.show', $user) }}"
                                         class="inline-flex items-center pr-2 py-2.5 mb-4 text-xs font-semibold text-center text-black bg-yellow-300 rounded-lg hover:bg-yellow-400 focus:ring-4 focus:outline-none focus:ring-yellow-300">
                                         <svg class="w-3.5 h-3.5 ms-2 mx-2" viewBox="0 0 24 24" fill="none"
                                             xmlns="http://www.w3.org/2000/svg" stroke="#000000">

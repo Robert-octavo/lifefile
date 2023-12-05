@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RecordController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -32,6 +33,9 @@ Route::resource('auth', AuthController::class)
 
 Route::delete('logout', fn () => to_route('auth.destroy'))->name('logout');
 Route::delete('auth', [AuthController::class, 'destroy'])->name('auth.destroy');
+
+Route::resource('records', RecordController::class)
+    ->only(['show']);
 
 // Route::resource('users', UserController::class)
 //     ->only(['create', 'store']);
