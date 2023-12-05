@@ -1,12 +1,12 @@
 <x-layout>
     @auth
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table class="w-full text-sm text-left rtl:text-center text-gray-700 border-gray-500">
-                <thead class="text-xs text-white uppercase bg-gray-50 dark:bg-gray-900 dark:text-gray-400">
+            <table class="w-full text-sm text-center rtl:text-center text-gray-700 border-gray-500">
+                <thead class="text-xs text-white text-center uppercase bg-gray-50 dark:bg-gray-900 dark:text-gray-400">
                     <tr>
                         <th scope="col" class="px-6 py-3">EmployerId</th>
                         <th scope="col" class="px-6 py-3">FirstName</th>
-                        <th scope="col" class="px-6 py-3">LastNme</th>
+                        <th scope="col" class="px-6 py-3">Last Name</th>
                         <th scope="col" class="px-6 py-3">Deparment</th>
                         <th scope="col" class="px-6 py-3">Total Access</th>
                         <th scope="col" class="px-6 py-3">Accions</th>
@@ -44,14 +44,58 @@
                                         </svg>
                                         Update
                                     </a>
-                                    <p>text2</p>
-                                    <p>text3</p>
+
+                                    {{-- Disable - Enable --}}
+                                    <form action="{{ route('users.toggle-access', $user) }}" method="POST">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit"
+                                            class="inline-flex items-center pr-2 py-2.5 mb-4 text-xs font-semibold text-center text-white bg-gray-500 rounded-lg hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300">
+                                            <svg class="w-3.5 h-3.5 ms-2 mx-2" viewBox="0 0 24 24" id="Layer_1"
+                                                data-name="Layer 1" xmlns="http://www.w3.org/2000/svg">
+                                                <defs>
+                                                    <style>
+                                                        .cls-1 {
+                                                            fill: none;
+                                                            stroke: #ffffff;
+                                                            stroke-miterlimit: 10;
+                                                            stroke-width: 1.91px;
+                                                        }
+                                                    </style>
+                                                </defs>
+                                                <circle class="cls-1" cx="9.61" cy="5.8" r="4.3" />
+                                                <path class="cls-1"
+                                                    d="M1.5,19.64l.7-3.47a7.56,7.56,0,0,1,7.41-6.08,7.48,7.48,0,0,1,4.6,1.57" />
+                                                <circle class="cls-1" cx="16.77" cy="16.77" r="5.73" />
+                                                <polyline class="cls-1" points="19.64 14.86 16.3 18.2 14.39 16.3" />
+                                            </svg>
+                                            {{ $user->access_room_911 ? 'Disable' : 'Enable' }}
+                                        </button>
+                                    </form>
+
+                                    {{-- History --}}
+                                    <a href="#"
+                                        class="inline-flex items-center pr-2 py-2.5 mb-4 text-xs font-semibold text-center text-black bg-yellow-300 rounded-lg hover:bg-yellow-400 focus:ring-4 focus:outline-none focus:ring-yellow-300">
+                                        <svg class="w-3.5 h-3.5 ms-2 mx-2" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg" stroke="#000000">
+                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+                                            </g>
+                                            <g id="SVGRepo_iconCarrier">
+                                                <path
+                                                    d="M8 13H14M8 17H16M13 3H5V5M13 3H14L19 8V9M13 3V7C13 8 14 9 15 9H19M19 9V12M5 10V21H19V16"
+                                                    stroke="#000000" stroke-width="1.5" stroke-linecap="round"
+                                                    stroke-linejoin="round"></path>
+                                            </g>
+                                        </svg>
+                                        History
+                                    </a>
                                     {{-- Delete --}}
                                     <form action="{{ route('users.destroy', $user) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"
-                                            class="inline-flex items-center pr-2 py-2.5 mb-4 text-xs font-semibold text-center text-white bg-red-500 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300">
+                                            class="inline-flex items-center pr-2 py-2.5 mb-4 text-xs font-semibold text-center text-white bg-red-500 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300">
                                             <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
                                                 class="w-3.5 h-3.5 ms-2 mx-2" viewBox="0,0,256,256">
                                                 <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1"
@@ -85,7 +129,7 @@
                     <tr>
                         <th scope="col" class="px-6 py-3">EmployerId</th>
                         <th scope="col" class="px-6 py-3">FirstName</th>
-                        <th scope="col" class="px-6 py-3">LastNme</th>
+                        <th scope="col" class="px-6 py-3">Last Name</th>
                         <th scope="col" class="px-6 py-3">Deparment</th>
                         <th scope="col" class="px-6 py-3">Total Access</th>
                     </tr>
