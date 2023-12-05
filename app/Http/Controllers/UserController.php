@@ -6,6 +6,7 @@ use App\Http\Requests\UpdateUser;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Record;
 
 class UserController extends Controller
 {
@@ -15,10 +16,19 @@ class UserController extends Controller
     public function index()
     {
         $users = User::with('department')->paginate();
-        //dd($users->toArray());
-        return view('users.index')->with('users', $users);
-        // pass the users to the view and load the view with the relationship department
-        //return view('users.index', ['users' => $users->load('department')]);
+        //save all the values from the records table
+        $records = DB::table('records')->get();
+        //dd($users, $records);
+
+        return view('users.index', ['users' => $users, 'records' => $records]);
+        // pass the users and the records to the view using with method the view with the relationship department
+
+
+
+        //return view('users.index', ['users' => $users->load('department'), 'records' => $records->get()]);
+
+
+        // return view('users.index')->with('users', $users);
     }
 
     /**
@@ -74,7 +84,16 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        // find the user by id in the table records
+        $records = DB::table('records')->where('user_id', $user->id)->get();
+        //dd($user->toArray(), $records->toArray());
+
+        // pass the user and the records to the view 
+
+        return view('users.show', ['user' => $user, 'records' => $records]);
+
+
+        //return view('users.show')->with('user', $user);
     }
 
     /**
