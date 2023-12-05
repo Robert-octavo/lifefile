@@ -107,4 +107,10 @@ class UserController extends Controller
         $user->delete();
         return redirect()->route('users.index')->with('success', 'Employee deleted successfully!');
     }
+
+    public function toggleAccess(User $user)
+    {
+        $user->toggleAccess();
+        return redirect()->back()->with('status', 'Employee updated successfully!');
+    }
 }

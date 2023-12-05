@@ -20,7 +20,7 @@ class User extends Authenticatable
         return $this->belongsTo(Department::class);
     }
 
-    public function toggleAcces_Room_911(): void
+    public function toggleAccess()
     {
         $this->access_room_911 = !$this->access_room_911;
         $this->save();
