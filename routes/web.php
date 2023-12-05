@@ -23,8 +23,8 @@ Route::get('/', function () {
 
 Route::get('/', fn () => to_route('users.index'))->name('home');
 
-Route::resource('users', UserController::class)
-    ->only(['index', 'show', 'create', 'store']);
+Route::resource('users', UserController::class);
+//->only(['index', 'show', 'create', 'store', 'edit', 'update', 'destroy']);
 
 Route::get('login', fn () => to_route('auth.create'))->name('login');
 Route::resource('auth', AuthController::class)
