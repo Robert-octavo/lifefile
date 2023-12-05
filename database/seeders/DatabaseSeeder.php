@@ -44,6 +44,16 @@ class DatabaseSeeder extends Seeder
                 'department_id' => $department_all->random()->id,
             ]);
         }
+
+        $users = \App\Models\User::all()->shuffle();
+
+        for ($i = 0; $i < 50; $i++) {
+            \App\Models\Record::factory()->create([
+                'user_id' => $users->random()->id,
+            ]);
+        }
+
+
         // \App\Models\User::factory(30)->create([
         //     //random number from 1 to 5
         //     'department_id' => $department_all->random()->id,
