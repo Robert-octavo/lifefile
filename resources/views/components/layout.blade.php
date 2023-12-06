@@ -18,12 +18,19 @@
 
 <body
     class="mx-auto mt-10 max-w-6xl bg-gradient-to-r from-indigo-100 from-10% via-sky-100 via-30% to-emerald-100 to-90%">
+
+    {{-- Title for Auth and guest --}}
     @auth
         <h1 class="text-center text-2xl font-bold mb-12">Administrative Menu</h1>
     @endauth
     @guest
         <h1 class="text-center text-2xl font-bold mb-12">Employers</h1>
     @endguest
+
+
+
+
+    {{-- Navigation --}}
     <nav class="mb-8 flex justify-between text-lg font-medium">
         <ul class="flex space-x-2">
             <li>{{ now()->format('d-m-Y H:i') }}</li>
@@ -49,35 +56,6 @@
             @endguest
         </ul>
     </nav>
-
-    <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
-
-    @auth
-        <div class="flex justify-end mb-4 gap-3">
-            {{-- Import a csv --}}
-            <form action="{{ route('users.import') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="flex justify-center items-center gap-1">
-                    <input
-                        class="block px-1 py-2.5 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                        type="file" name="file" accept=".csv">
-                    <button
-                        class="inline-flex items-center px-5 text-4  text-center text-white bg-gray-500 rounded-lg hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-blue-300"
-                        type="submit">Import .csv</button>
-                </div>
-            </form>
-            <a href="{{ route('users.create') }}"
-                class="inline-flex items-center px-5 py-2.5 text-sm font-semibold text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                {{-- <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                    fill="none" viewBox="0 0 14 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M1 5h12m0 0L9 1m4 4L9 9" />
-                </svg> --}}
-                New Employee
-            </a>
-        </div>
-    @endauth
-
     {{-- Session Alerts --}}
     <div x-data="{ flash: true }">
         @if (session('success'))
@@ -113,6 +91,36 @@
             </div>
         @endif
     </div>
+
+    <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+
+    @auth
+        <div class="flex justify-end mb-4 gap-3">
+            {{-- Import a csv --}}
+            <form action="{{ route('users.import') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="flex justify-center items-center gap-1">
+                    <input
+                        class="block px-1 py-2.5 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                        type="file" name="file" accept=".csv">
+                    <button
+                        class="inline-flex items-center px-5 text-4  text-center text-white bg-gray-500 rounded-lg hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-blue-300"
+                        type="submit">Import .csv</button>
+                </div>
+            </form>
+            <a href="{{ route('users.create') }}"
+                class="inline-flex items-center px-5 py-2.5 text-sm font-semibold text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                {{-- <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 14 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M1 5h12m0 0L9 1m4 4L9 9" />
+                </svg> --}}
+                New Employee
+            </a>
+        </div>
+    @endauth
+
+
     {{-- @if (session()->has('success'))
         <div role="alert"
             class="my-8 rounded-md border-l-4 border-green-300 bg-green-100 p-4 text-green-700 opacity-75">
