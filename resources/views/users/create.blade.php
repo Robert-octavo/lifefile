@@ -1,6 +1,6 @@
 <x-layout-login>
     <a href="{{ route('users.index') }}"><i class="fa-solid fa-arrow-left"></i></a>
-    <h1 class="text-center text-2xl font-bold">New Employer</h1>
+    <h1 class="text-center text-2xl font-bold">New Employee</h1>
     <x-card class="container mx-auto mt-10 mb-10 max-w-lg">
         <form action="{{ route('users.store') }}" method="POST">
             @csrf
