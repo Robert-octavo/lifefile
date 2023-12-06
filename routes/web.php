@@ -27,6 +27,7 @@ Route::get('/', fn () => to_route('users.index'))->name('home');
 
 Route::resource('users', UserController::class);
 //->only(['index', 'show', 'create', 'store', 'edit', 'update', 'destroy']);
+Route::post('users/import', [UserController::class, 'import'])->name('users.import');
 Route::patch('users/{user}/access', [UserController::class, 'toggleAccess'])->name('users.toggle-access');
 Route::get('login', fn () => to_route('auth.create'))->name('login');
 Route::resource('auth', AuthController::class)

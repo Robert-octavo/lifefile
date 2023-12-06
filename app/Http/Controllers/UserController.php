@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Record;
+use App\Models\Department;
 
 class UserController extends Controller
 {
@@ -131,5 +132,50 @@ class UserController extends Controller
     {
         $user->toggleAccess();
         return redirect()->back()->with('status', 'Employee updated successfully!');
+    }
+
+    public function import(Request $request)
+    {
+        $file = $request->file('file');
+        $fileContents = file($file->getPathname());
+        //dd($fileContents);
+
+        $deparments = Department::all();
+        //dd($deparments->toArray());
+
+        foreach ($fileContents as $line) {
+            $data = str_getcsv($line);
+            // create an array of data separated by commas
+            $data = explode(';', $line);
+
+            //delete the \r\n
+            $data[6] = str_replace("\r\n", '', $data[6]);
+
+            // check if the department exists in the database
+            $department = Department::where('id', $data[6])->first();
+            $email = User::where('email', $data[4])->first();
+
+            if (!$department) {
+                return redirect()->back()->with('error', 'Department does not exist in the database.');
+            }
+
+            if ($email) {
+                return redirect()->back()->with('error', 'Email already exists in the database.');
+            }
+
+            //dd($data);
+            User::create([
+                'name' => $data[0],
+                'last_name' => $data[1],
+                'username' => $data[2],
+                'access_room_911' => $data[3],
+                'email' => $data[4],
+                'password' => $data[5],
+                'department_id' => $data[6],
+                // Add more fields as needed
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'CSV file imported successfully.');
     }
 }
