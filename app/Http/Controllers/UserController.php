@@ -16,20 +16,29 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::with('department')->paginate();
+        //$users = User::with('department')->paginate();
+        $users = User::query();
+
+        $users->when(request('search'), function ($query, $search) {
+            $query->where('id', $search)
+                ->orWhere('name', 'LIKE', '%' . $search . '%')
+                ->orWhere('last_name', 'LIKE', '%' . $search . '%');
+        })->when(request('department_id'), function ($query, $department_id) {
+            $query->where('department_id', $department_id);
+        });
+        // })->when(request('created_at'), function ($query) {
+        //     $initialDate = request('created_at') . ' 00:00:00';
+        //     $query->whereBetween('last_login_at', [$initialDate, now()]);
+        // });
+
+
+        $users = $users->with('department')->paginate();
+
         //save all the values from the records table
         $records = DB::table('records')->get();
         //dd($users, $records);
 
         return view('users.index', ['users' => $users, 'records' => $records]);
-        // pass the users and the records to the view using with method the view with the relationship department
-
-
-
-        //return view('users.index', ['users' => $users->load('department'), 'records' => $records->get()]);
-
-
-        // return view('users.index')->with('users', $users);
     }
 
     /**
@@ -131,7 +140,7 @@ class UserController extends Controller
     public function toggleAccess(User $user)
     {
         $user->toggleAccess();
-        return redirect()->back()->with('status', 'Employee updated successfully!');
+        return redirect()->back()->with('success', 'Employee updated successfully!');
     }
 
     public function import(Request $request)

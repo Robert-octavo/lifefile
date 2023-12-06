@@ -1,6 +1,101 @@
 <x-layout>
+    <x-card class="mb-4 text-sm">
+        <form id="filter-form" action="{{ route('users.index') }} " method="GET">
+            @csrf
+            <div class="flex justify-between items-center mb-2">
+                <div>
+                    <div class="mb-1 font-semibold text-xs"><br></div>
+                    {{-- <x-text-input name="search" value="{{ request('search') }}" placeholder="Search by Employee ID" /> --}}
+                    <input type="text" placeholder="Search by employee ID" name="search" value="{{ request('search') }}"
+                        onchange="document.getElementById('filter-form').submit()" id="search"
+                        class="w-full rounded-md border-0 py-1.5 px-2.5 text-sm ring-1 ring-slate-300 placeholder:text-slate-500 focus:ring-2">
+                </div>
+                <div>
+                    <div class="mb-1 font-semibold text-xs"><br></div>
+                    <select onchange="document.getElementById('filter-form').submit()"
+                        class="w-full rounded-md border-0 py-1.5 px-4.5 text-sm ring-1 ring-slate-300 text-slate-500"
+                        name="department_id" id="department_id">
+                        <option value=''>Filter by Department</option>
+                        <option value="1">Accounting</option>
+                        <option value="2">Administration</option>
+                        <option value="3">Customer Service</option>
+                        <option value="4">Engineering</option>
+                        <option value="5">IT</option>
+                    </select>
+                </div>
+                <div>
+                    <div class="mb-1 font-semibold text-xs text-slate-500">Initial access date: </div>
+                    <input
+                        class="w-full rounded-md border-0 py-1.5 px-2.5 text-sm ring-1 ring-slate-300 text-slate-500 focus:ring-2"
+                        type="date" id="created_at" name="created_at" value="{{ request('created_at') }}"
+                        min="2022-01-00" max="2024-12-31" />
+                </div>
+                <div>
+                    <div class="mb-1 font-semibold text-xs text-slate-500">Final access date: </div>
+                    <input
+                        class="w-full rounded-md border-0 py-1.5 px-2.5 text-sm ring-1 ring-slate-300 text-slate-500 focus:ring-2"
+                        type="date" id="last_login_at" name="last_login_at" value="{{ request('last_login_at') }}"
+                        min="2022-01-00" max="2024-12-31" />
+                </div>
+                <div>
+                    <div class="mb-1 font-semibold text-xs"><br></div>
+                    <button
+                        class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+                        <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z" />
+                        </svg>
+                        <span>Filter</span>
+                    </button>
+                </div>
+                <div>
+                    <div class="mb-1 font-semibold text-xs"><br></div>
+                    <button type="button"
+                        onclick="document.getElementById('search').value = '';document.getElementById('department_id').value = '';document.getElementById('filter-form').submit()"
+                        class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+                        onclick="">
+                        <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
 
+                        <span>Clear filter</span>
+                    </button>
+                </div>
+
+
+            </div>
+        </form>
+    </x-card>
+    <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
     @auth
+
+        <div class="flex justify-end mb-4 gap-3">
+            {{-- Import a csv --}}
+            <form action="{{ route('users.import') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="flex justify-center items-center gap-1">
+                    <input
+                        class="block px-1 py-2.5 w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                        type="file" name="file" accept=".csv">
+                    <button
+                        class="inline-flex items-center px-5 text-4  text-center text-white bg-gray-500 rounded-lg hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-blue-300"
+                        type="submit">Import .csv</button>
+                </div>
+            </form>
+            <a href="{{ route('users.create') }}"
+                class="inline-flex items-center px-5 py-2.5 text-sm font-semibold text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                {{-- <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 14 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M1 5h12m0 0L9 1m4 4L9 9" />
+                </svg> --}}
+                New Employee
+            </a>
+        </div>
+
+        {{-- Table --}}
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-center rtl:text-center text-gray-700 border-gray-500">
                 <thead class="text-xs text-white text-center uppercase bg-gray-50 dark:bg-gray-900 dark:text-gray-400">

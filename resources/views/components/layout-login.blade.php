@@ -25,7 +25,7 @@
             <div x-show="flash"
                 class="relative mb-10 rounded border border-green-400 bg-green-100 px-4 py-3 text-lg text-green-700"
                 role="alert">
-                <strong class="font-bold">Success!</strong>
+                <strong class="font-bold">{{ session('success') }}</strong>
                 <div>{{ session('status') }}</div>
 
                 <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
@@ -37,20 +37,23 @@
             </div>
         @endif
     </div>
-    {{-- @if (session()->has('success'))
-        <div role="alert"
-            class="my-8 rounded-md border-l-4 border-green-300 bg-green-100 p-4 text-green-700 opacity-75">
-            <p class="font-bold">Success!</p>
-            <p>{{ session('success') }}</p>
-        </div>
-    @endif --}}
+    <div x-data="{ flash: true }">
+        @if (session('error'))
+            <div x-show="flash"
+                class="relative mb-10 rounded border border-red-400 bg-red-100 px-4 py-3 text-lg text-red-700"
+                role="alert">
+                <strong class="font-bold">{{ session('error') }}</strong>
+                <div>{{ session('status') }}</div>
 
-    @if (session()->has('error'))
-        <div role="alert" class="my-8 rounded-md border-l-4 border-red-300 bg-red-100 p-4 text-red-700 opacity-75">
-            <p class="font-bold">Error!</p>
-            <p>{{ session('error') }}</p>
-        </div>
-    @endif
+                <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        @click="flash = false" stroke="currentColor" class="h-6 w-6 cursor-pointer">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </span>
+            </div>
+        @endif
+    </div>
 
     {{ $slot }}
 </body>
