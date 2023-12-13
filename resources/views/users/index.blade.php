@@ -1,5 +1,6 @@
 <x-layout>
     <x-card class="mb-4 text-sm">
+        {{-- Filter form --}}
         <form id="filter-form" action="{{ route('users.index') }} " method="GET">
             @csrf
             <div class="flex justify-between items-center mb-2">
@@ -39,7 +40,7 @@
                 </div>
                 <div>
                     <div class="mb-1 font-semibold text-xs"><br></div>
-                    <button
+                    <button type="submit"
                         class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
                         <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -69,6 +70,8 @@
         </form>
     </x-card>
     <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+
+    {{-- If the user is logged in --}}
     @auth
 
         <div class="flex justify-end mb-4 gap-3">
@@ -216,6 +219,8 @@
         </div>
 
     @endauth
+
+    {{-- If the user is not logged in --}}
     @guest
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left rtl:text-center text-gray-700 border-gray-500">
@@ -245,6 +250,8 @@
             </table>
         </div>
     @endguest
+
+    {{-- Pagination --}}
     <div class="my-4">
         {{ $users->links('pagination::simple-tailwind') }}
     </div>

@@ -1,6 +1,8 @@
 <x-layout-login>
     <a href="{{ route('users.index') }}"><i class="fa-solid fa-arrow-left"></i></a>
     <h1 class="text-center text-2xl font-bold">History</h1>
+
+    {{-- If the user is logged in --}}
     @auth
         <div class="mb-4 flex justify-between items-center">
             <p><span class="text-lg font-Bold">Employee:</span> {{ $user->name . ' ' . $user->last_name }}</p>
@@ -53,4 +55,9 @@
         @endif
 
     @endauth
+
+    {{-- If the user is not logged in --}}
+    @guest
+        <h2 class="text-center text-2xl font-bold">You do not habe access to this view</h2>
+    @endguest
 </x-layout-login>

@@ -19,12 +19,26 @@ class UserController extends Controller
         //$users = User::with('department')->paginate();
         $users = User::query();
 
+        //dd(request()->all());
+        $last_login_at = request('last_login_at');
+        $created_at = request('created_at');
+        //dd($last_login_at);
+        // $users->when(request('last_login_at'), function ($query = null) use ($last_login_at) {
+        //     $query->where('last_login_at', '<=', $last_login_at);
+        // });
+
+        //dd($users->toSql(), $users->getBindings());
+
         $users->when(request('search'), function ($query, $search) {
             $query->where('id', $search)
                 ->orWhere('name', 'LIKE', '%' . $search . '%')
                 ->orWhere('last_name', 'LIKE', '%' . $search . '%');
         })->when(request('department_id'), function ($query, $department_id) {
             $query->where('department_id', $department_id);
+        })->when(request('created_at'), function ($query = null) use ($created_at) {
+            $query->where('created_at', '>=', $created_at);
+        })->when(request('last_login_at'), function ($query = null) use ($last_login_at) {
+            $query->where('last_login_at', '<=', $last_login_at);
         });
         // })->when(request('created_at'), function ($query) {
         //     $initialDate = request('created_at') . ' 00:00:00';
