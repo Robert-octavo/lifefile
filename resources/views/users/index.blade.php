@@ -20,7 +20,7 @@
                         <option value="1">Accounting</option>
                         <option value="2">Administration</option>
                         <option value="3">Customer Service</option>
-                        <option value="4">Engineering</option>
+                        <option value="4">Engineering 💻</option>
                         <option value="5">IT</option>
                     </select>
                 </div>
@@ -241,9 +241,8 @@
                             <td class="px-6 py-4">{{ $user->name }}</td>
                             <td class="px-6 py-4">{{ $user->last_name }}</td>
                             {{-- Display department name base in the $user_id --}}
-
                             <td class="px-6 py-4">{{ $user->department->name }}</td>
-                            <td class="px-6 py-4">Total Access</td>
+                            <td class="px-6 py-4">{{ $has = $records->where('user_id', $user->id)->count() }}</td>
                         </tr>
                     @endforeach
                 </tbody>

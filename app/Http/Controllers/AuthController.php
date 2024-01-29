@@ -37,7 +37,7 @@ class AuthController extends Controller
         ]);
 
         $user = User::query()
-            ->where('username', $request->username)
+            ->where('id', $request->username)
             ->first();
 
         $remember = true;
